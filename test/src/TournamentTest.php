@@ -1,5 +1,15 @@
 <?php
+
 namespace Tournament;
+
+use Tournament\Equipment\Defense\Armor;
+use Tournament\Equipment\Defense\Buckler;
+use Tournament\Equipment\Weapon\Axe;
+use Tournament\Fighter\Highlander;
+use Tournament\Fighter\Swordsman;
+use Tournament\Fighter\VeteranHighlander;
+use Tournament\Fighter\ViciousDecorator;
+use Tournament\Fighter\Viking;
 
 /**
  * This is a duel simulation
@@ -11,30 +21,30 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
      * A Swordsman has 100 hit points and use a 1 hand sword that does 5 dmg
      * A Viking has 120 hit points and use a 1 hand axe that does 6 dmg
      */
-    public function testSwordsmanVsViking()
+    public function testSwordsmanVsViking(): void
     {
         $swordsman = new Swordsman();
         $viking = new Viking();
 
         $swordsman->engage($viking);
 
-        $this->assertEquals(0, $swordsman->hitPoints());
-        $this->assertEquals(35, $viking->hitPoints());
+        self::assertEquals(0, $swordsman->hitPoints());
+        self::assertEquals(35, $viking->hitPoints());
     }
 
     /**
      * a buckler cancel all the damages of a blow one time out of two
      * a buckler is destroyed after blocking 3 blow from an axe
      */
-    public function testSwordsmanWithBucklerVsVikingWithBuckler()
+    public function testSwordsmanWithBucklerVsVikingWithBuckler(): void
     {
-        $swordsman = (new Swordsman())->equip("buckler");
-        $viking = (new Viking())->equip("buckler");
+        $swordsman = (new Swordsman())->equip(new Buckler());
+        $viking = (new Viking())->equip(new Buckler());
 
         $swordsman->engage($viking);
 
-        $this->assertEquals(0, $swordsman->hitPoints());
-        $this->assertEquals(70, $viking->hitPoints());
+        self::assertEquals(0, $swordsman->hitPoints());
+        self::assertEquals(70, $viking->hitPoints());
     }
 
     /**
@@ -42,17 +52,17 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
      * a Great Sword is a two handed sword deliver 12 damages, but can attack only 2 every 3)(attack ; attack ; no attack)
      * an armor : reduce all received damages by 3 & reduce delivered damages by one
      */
-    public function testArmoredSwordsmanVsViking()
+    public function testArmoredSwordsmanVsViking(): void
     {
         $highlander = new Highlander();
         $swordsman = (new Swordsman())
-            ->equip("buckler")
-            ->equip("armor");
+            ->equip(new Buckler())
+            ->equip(new Armor());
 
         $swordsman->engage($highlander);
 
-        $this->assertEquals(0, $swordsman->hitPoints());
-        $this->assertEquals(10, $highlander->hitPoints());
+        self::assertEquals(0, $swordsman->hitPoints());
+        self::assertEquals(10, $highlander->hitPoints());
     }
 
     /**
@@ -61,18 +71,18 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
      * a veteran Highlander goes Berserk once his hit points are under 30% of his initial total
      * once Berserk, he doubles his damages
      */
-    public function testViciousSwordsmanVsVeteranHighlander()
+    public function testViciousSwordsmanVsVeteranHighlander(): void
     {
-        $swordsman = (new Swordsman("Vicious"))
-            ->equip("axe")
-            ->equip("buckler")
-            ->equip("armor");
+        $swordsman = (new ViciousDecorator(new Swordsman()))
+            ->equip(new Axe())
+            ->equip(new Buckler())
+            ->equip(new Armor());
 
-        $highlander = new Highlander("Veteran");
+        $highlander = new VeteranHighlander();
 
         $swordsman->engage($highlander);
 
-        $this->assertEquals(1, $swordsman->hitPoints());
-        $this->assertEquals(0, $highlander->hitPoints());
+        self::assertEquals(1, $swordsman->hitPoints());
+        self::assertEquals(0, $highlander->hitPoints());
     }
 }

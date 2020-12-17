@@ -8,7 +8,8 @@ use Tournament\Equipment\Weapon\Axe;
 use Tournament\Fighter\Highlander;
 use Tournament\Fighter\Swordsman;
 use Tournament\Fighter\VeteranHighlander;
-use Tournament\Fighter\ViciousDecorator;
+use Tournament\Fighter\Vicious;
+use Tournament\Fighter\ViciousSwordsman;
 use Tournament\Fighter\Viking;
 
 /**
@@ -73,7 +74,7 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
      */
     public function testViciousSwordsmanVsVeteranHighlander(): void
     {
-        $swordsman = (new ViciousDecorator(new Swordsman()))
+        $swordsman = (new ViciousSwordsman())
             ->equip(new Axe())
             ->equip(new Buckler())
             ->equip(new Armor());

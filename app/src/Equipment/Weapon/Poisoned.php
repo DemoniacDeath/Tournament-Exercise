@@ -6,7 +6,7 @@ namespace Tournament\Equipment\Weapon;
 
 use Tournament\Damage;
 
-class PoisonedDecorator implements Weapon
+class Poisoned implements Weapon
 {
     private Weapon $decorated;
     private int $attackCounter = 0;

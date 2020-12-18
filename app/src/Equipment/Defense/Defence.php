@@ -12,18 +12,18 @@ use Tournament\Equipment\Equipment;
 
 abstract class Defence implements Equipment
 {
-    protected Collection $ownDamageModifiers;
-    protected Collection $receivedDamageModifiers;
+    private Collection $ownDamageModifiers;
+    private Collection $receivedDamageModifiers;
 
     /**
      * Defence constructor.
      * @param Collection|DamageModifier[] $ownDamageModifiers
      * @param Collection|DamageModifier[] $receivedDamageModifiers
      */
-    public function __construct(Collection $ownDamageModifiers, Collection $receivedDamageModifiers)
+    public function __construct(Collection $receivedDamageModifiers, Collection $ownDamageModifiers)
     {
-        $this->ownDamageModifiers = $ownDamageModifiers;
         $this->receivedDamageModifiers = $receivedDamageModifiers;
+        $this->ownDamageModifiers = $ownDamageModifiers;
     }
 
     public function getOwnDamageModifier(): DamageModifier

@@ -15,7 +15,7 @@ abstract class Weapon implements Equipment
     /**
      * @var Collection|DamageModifier[]
      */
-    protected Collection $damageModifiers;
+    private Collection $damageModifiers;
 
     /**
      * AbstractWeapon constructor.

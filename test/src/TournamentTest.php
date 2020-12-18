@@ -2,6 +2,7 @@
 
 namespace Tournament;
 
+use PHPUnit\Framework\TestCase;
 use Tournament\Equipment\Defense\Armor;
 use Tournament\Equipment\Defense\Buckler;
 use Tournament\Equipment\Weapon\Axe;
@@ -9,14 +10,13 @@ use Tournament\Fighter\Highlander;
 use Tournament\Fighter\Strategy\DamageTaking\Veteran;
 use Tournament\Fighter\Strategy\Equipment\Vicious;
 use Tournament\Fighter\Swordsman;
-use Tournament\Fighter\VeteranHighlander;
 use Tournament\Fighter\Viking;
 
 /**
  * This is a duel simulation
  * Blow exchange are sequential, A engage B means that A will give the first blow, then B will respond, continue till one side death
  */
-class TournamentTest extends \PHPUnit_Framework_TestCase
+class TournamentTest extends TestCase
 {
     /**
      * A Swordsman has 100 hit points and use a 1 hand sword that does 5 dmg

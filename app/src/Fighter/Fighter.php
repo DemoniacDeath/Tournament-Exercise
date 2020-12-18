@@ -16,18 +16,18 @@ use Tournament\Fighter\Strategy\Equipment\WeaponStrategy;
 
 abstract class Fighter
 {
-    protected int $hitPoints;
-    protected Weapon $weapon;
+    private int $hitPoints;
+    private Weapon $weapon;
     /**
      * @var Collection|Defence[]
      */
-    protected Collection $defences;
+    private Collection $defences;
     /**
      * @var Collection|DamageModifier[]
      */
-    protected Collection $damageModifiers;
-    protected ?WeaponStrategy $weaponStrategy = null;
-    protected ?DamageTakingStrategy $damageTakingStrategy = null;
+    private Collection $damageModifiers;
+    private ?WeaponStrategy $weaponStrategy = null;
+    private ?DamageTakingStrategy $damageTakingStrategy = null;
 
     /**
      * AbstractFighter constructor.
@@ -106,7 +106,7 @@ abstract class Fighter
     /**
      * @return Collection|DamageModifier[]
      */
-    protected function collectDamageModifiers(): Collection
+    private function collectDamageModifiers(): Collection
     {
         $damageModifiers = $this->defences->map(fn(Defence $defence) => $defence->getOwnDamageModifier());
         foreach ($this->damageModifiers as $damageModifier) {

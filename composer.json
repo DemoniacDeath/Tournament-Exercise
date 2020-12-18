@@ -14,7 +14,7 @@
 
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "phpunit/phpunit": "~5.5"
+    "phpunit/phpunit": "~9.2.2"
   },
 
   "autoload": {

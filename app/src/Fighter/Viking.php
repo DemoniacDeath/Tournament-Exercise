@@ -10,8 +10,8 @@ class Viking extends AbstractFighter
 {
     public function __construct()
     {
-        $this->equip(new Axe());
         parent::__construct();
+        $this->equip(new Axe());
     }
 
     public function initialHitPoints(): int

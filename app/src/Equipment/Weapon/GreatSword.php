@@ -28,11 +28,11 @@ class GreatSword extends AbstractWeapon
 
     /**
      * @param Fighter $target
-     * @param iterable|DamageModifier[] $damageModifiers
+     * @param iterable|DamageModifier[] $wielderDamageModifiers
      */
-    public function attack(Fighter $target, iterable $damageModifiers): void
+    public function attack(Fighter $target, iterable $wielderDamageModifiers): void
     {
         $this->attackCounter++;
-        parent::attack($target, $damageModifiers);
+        parent::attack($target, $wielderDamageModifiers);
     }
 }

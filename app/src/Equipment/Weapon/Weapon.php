@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tournament\Equipment\Weapon;
 
 
+use Doctrine\Common\Collections\Collection;
 use Tournament\Damage;
 use Tournament\DamageModifier;
 use Tournament\Equipment\Equipment;
@@ -17,9 +18,9 @@ interface Weapon extends Equipment
 
     /**
      * @param Fighter $target
-     * @param iterable|DamageModifier[] $damageModifiers
+     * @param Collection|DamageModifier[] $wielderDamageModifiers
      */
-    public function attack(Fighter $target, iterable $damageModifiers): void;
+    public function attack(Fighter $target, Collection $wielderDamageModifiers): void;
 
     public function addDamageModifier(DamageModifier $damageModifier): void;
 }

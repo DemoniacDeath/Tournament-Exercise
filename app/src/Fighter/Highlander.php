@@ -10,8 +10,8 @@ class Highlander extends AbstractFighter
 {
     public function __construct()
     {
-        $this->equip(new GreatSword());
         parent::__construct();
+        $this->equip(new GreatSword());
     }
 
     public function initialHitPoints(): int

@@ -4,38 +4,40 @@ declare(strict_types=1);
 namespace Tournament\Equipment\Defense;
 
 
+use Doctrine\Common\Collections\Collection;
 use Tournament\DamageModifier;
+use Tournament\DamageModifier\CollectionDamageModifier;
 use Tournament\Equipment\Equipment;
 
 abstract class Defence implements Equipment
 {
-    protected iterable $ownDamageModifiers = [];
-    protected iterable $receivedDamageModifiers = [];
+    protected Collection $ownDamageModifiers;
+    protected Collection $receivedDamageModifiers;
 
     /**
      * Defence constructor.
-     * @param iterable|DamageModifier[] $ownDamageModifiers
-     * @param iterable|DamageModifier[] $receivedDamageModifiers
+     * @param Collection|DamageModifier[] $ownDamageModifiers
+     * @param Collection|DamageModifier[] $receivedDamageModifiers
      */
-    public function __construct(iterable $ownDamageModifiers, iterable $receivedDamageModifiers)
+    public function __construct(Collection $ownDamageModifiers, Collection $receivedDamageModifiers)
     {
         $this->ownDamageModifiers = $ownDamageModifiers;
         $this->receivedDamageModifiers = $receivedDamageModifiers;
     }
 
     /**
-     * @return iterable|DamageModifier[]
+     * @return DamageModifier
      */
-    public function getOwnDamageModifiers(): iterable
+    public function getOwnDamageModifier(): DamageModifier
     {
-        return $this->ownDamageModifiers;
+        return new CollectionDamageModifier($this->ownDamageModifiers);
     }
 
     /**
-     * @return iterable|DamageModifier[]
+     * @return DamageModifier
      */
-    public function getReceivedDamageModifiers(): iterable
+    public function getReceivedDamageModifier(): DamageModifier
     {
-        return $this->receivedDamageModifiers;
+        return new CollectionDamageModifier($this->receivedDamageModifiers);
     }
 }

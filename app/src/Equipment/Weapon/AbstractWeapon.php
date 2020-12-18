@@ -4,20 +4,25 @@ declare(strict_types=1);
 namespace Tournament\Equipment\Weapon;
 
 
-use Tournament\Damage;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Tournament\DamageModifier;
-use Tournament\Equipment\Defense\Armor;
-use Tournament\Equipment\Defense\Defence;
-use Tournament\Equipment\Equipment;
-use Tournament\Fighter\AbstractFighter;
 use Tournament\Fighter\Fighter;
 
 abstract class AbstractWeapon implements Weapon
 {
     /**
-     * @var iterable|DamageModifier[]
+     * @var Collection|DamageModifier[]
      */
-    protected iterable $damageModifiers = [];
+    protected Collection $damageModifiers;
+
+    /**
+     * AbstractWeapon constructor.
+     */
+    public function __construct()
+    {
+        $this->damageModifiers = new ArrayCollection();
+    }
 
     public function canAttack(): bool
     {
@@ -31,9 +36,9 @@ abstract class AbstractWeapon implements Weapon
 
     /**
      * @param Fighter $target
-     * @param iterable|DamageModifier[] $damageModifiers
+     * @param iterable|DamageModifier[] $wielderDamageModifiers
      */
-    public function attack(Fighter $target, iterable $damageModifiers): void
+    public function attack(Fighter $target, iterable $wielderDamageModifiers): void
     {
         if (!$this->canAttack()) {
             return;
@@ -42,7 +47,7 @@ abstract class AbstractWeapon implements Weapon
         foreach ($this->damageModifiers as $damageModifier) {
             $damage = $damageModifier->modifyDamage($damage);
         }
-        foreach ($damageModifiers as $damageModifier) {
+        foreach ($wielderDamageModifiers as $damageModifier) {
             $damage = $damageModifier->modifyDamage($damage);
         }
 

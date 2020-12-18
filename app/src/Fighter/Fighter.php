@@ -5,12 +5,14 @@ namespace Tournament\Fighter;
 
 
 use Tournament\Damage;
-use Tournament\Equipment\Defense\Defence;
+use Tournament\DamageModifier;
 use Tournament\Equipment\Equipment;
 
 interface Fighter
 {
     public function equip(Equipment $equipment): self;
+
+    public function strategy(Strategy $strategy): self;
 
     public function engage(Fighter $fighter): void;
 
@@ -20,10 +22,5 @@ interface Fighter
 
     public function takeDamage(Damage $damage): void;
 
-    public function modifyDamage(Damage $damage): Damage;
-
-    /**
-     * @return iterable|Defence[]
-     */
-    public function defences(): iterable;
+    public function addDamageModifier(DamageModifier $damageModifier): void;
 }

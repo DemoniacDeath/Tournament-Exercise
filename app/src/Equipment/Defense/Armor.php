@@ -4,17 +4,16 @@ declare(strict_types=1);
 namespace Tournament\Equipment\Defense;
 
 
-use Tournament\Damage;
+use Tournament\DamageModifier\SubstractingDamageModifier;
 
-class Armor extends Defense
+class Armor extends Defence
 {
-    public function reduceOwnDamage(Damage $damage): Damage
+    public function __construct()
     {
-        return $damage->sub(1);
-    }
-
-    public function reduceReceivedDamage(Damage $damage): Damage
-    {
-        return $damage->sub(3);
+        parent::__construct([
+            new SubstractingDamageModifier(1),
+        ], [
+            new SubstractingDamageModifier(3),
+        ]);
     }
 }

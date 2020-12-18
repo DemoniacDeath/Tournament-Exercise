@@ -5,7 +5,9 @@ namespace Tournament\Equipment\Weapon;
 
 
 use Tournament\Damage;
+use Tournament\DamageModifier;
 use Tournament\DamageType;
+use Tournament\Fighter\Fighter;
 
 class GreatSword extends AbstractWeapon
 {
@@ -24,8 +26,13 @@ class GreatSword extends AbstractWeapon
         return $this->attackCounter % 3 !== 0;
     }
 
-    public function beforeAttack(): void
+    /**
+     * @param Fighter $target
+     * @param iterable|DamageModifier[] $damageModifiers
+     */
+    public function attack(Fighter $target, iterable $damageModifiers): void
     {
         $this->attackCounter++;
+        parent::attack($target, $damageModifiers);
     }
 }

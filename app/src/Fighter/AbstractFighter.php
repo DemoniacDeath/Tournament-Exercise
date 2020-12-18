@@ -5,7 +5,8 @@ namespace Tournament\Fighter;
 
 
 use Tournament\Damage;
-use Tournament\Equipment\Defense\Defense;
+use Tournament\DamageModifier;
+use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Equipment;
 use Tournament\Equipment\Weapon\AbstractWeapon;
 use Tournament\Equipment\Weapon\Weapon;
@@ -15,9 +16,13 @@ abstract class AbstractFighter implements Fighter
     protected int $hitPoints;
     protected Weapon $weapon;
     /**
-     * @var iterable|Defense[]
+     * @var iterable|Defence[]
      */
-    protected iterable $defenses = [];
+    protected iterable $defences = [];
+    /**
+     * @var iterable|DamageModifier[]
+     */
+    protected iterable $damageModifiers = [];
 
     /**
      * AbstractFighter constructor.
@@ -37,7 +42,7 @@ abstract class AbstractFighter implements Fighter
         if (!$this->isAlive()) {
             return;
         }
-        $this->attack($fighter);
+        $this->weapon->attack($fighter, $this->collectDamageModifiers());
         $fighter->engage($this);
     }
 
@@ -46,8 +51,8 @@ abstract class AbstractFighter implements Fighter
         if ($equipment instanceof Weapon) {
             $this->weapon = $equipment;
         }
-        if ($equipment instanceof Defense) {
-            $this->defenses[] = $equipment;
+        if ($equipment instanceof Defence) {
+            $this->defences[] = $equipment;
         }
         return $this;
     }
@@ -59,8 +64,10 @@ abstract class AbstractFighter implements Fighter
 
     public function takeDamage(Damage $damage): void
     {
-        foreach ($this->defenses as $defense) {
-            $damage = $defense->reduceReceivedDamage($damage);
+        foreach ($this->defences as $defence) {
+            foreach ($defence->getReceivedDamageModifiers() as $damageModifier) {
+                $damage = $damageModifier->modifyDamage($damage);
+            }
         }
         $this->hitPoints -= $damage->getAmount();
         if ($this->hitPoints < 0) {
@@ -68,22 +75,33 @@ abstract class AbstractFighter implements Fighter
         }
     }
 
-    protected function attack(Fighter $fighter): void
+    public function defences(): iterable
     {
-        $this->weapon->beforeAttack();
-        if (!$this->weapon->canAttack()) {
-            return;
-        }
-        $damage = $this->calculateDamage();
-        $fighter->takeDamage($damage);
+        return $this->defences;
     }
 
-    protected function calculateDamage(): Damage
+    public function modifyDamage(Damage $damage): Damage
     {
-        $damage = $this->weapon->getDamage();
-        foreach ($this->defenses as $defense) {
+        foreach ($this->defences as $defense) {
             $damage = $defense->reduceOwnDamage($damage);
         }
         return $damage;
+    }
+
+    /**
+     * @return iterable|DamageModifier[]
+     */
+    protected function collectDamageModifiers(): iterable
+    {
+        $damageModifiers = [];
+        foreach ($this->defences as $defense) {
+            foreach ($defense->getOwnDamageModifiers() as $damageModifier) {
+                $damageModifiers[] = $damageModifier;
+            }
+        }
+        foreach ($this->damageModifiers as $damageModifier) {
+            $damageModifiers[] = $damageModifier;
+        }
+        return $damageModifiers;
     }
 }

@@ -5,6 +5,7 @@ namespace Tournament\Fighter;
 
 
 use Tournament\Damage;
+use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Equipment;
 
 interface Fighter
@@ -18,4 +19,11 @@ interface Fighter
     public function initialHitPoints(): int;
 
     public function takeDamage(Damage $damage): void;
+
+    public function modifyDamage(Damage $damage): Damage;
+
+    /**
+     * @return iterable|Defence[]
+     */
+    public function defences(): iterable;
 }

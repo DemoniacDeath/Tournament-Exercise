@@ -5,7 +5,9 @@ namespace Tournament\Equipment\Weapon;
 
 
 use Tournament\Damage;
+use Tournament\DamageModifier;
 use Tournament\Equipment\Equipment;
+use Tournament\Fighter\Fighter;
 
 interface Weapon extends Equipment
 {
@@ -13,5 +15,11 @@ interface Weapon extends Equipment
 
     public function canAttack(): bool;
 
-    public function beforeAttack(): void;
+    /**
+     * @param Fighter $target
+     * @param iterable|DamageModifier[] $damageModifiers
+     */
+    public function attack(Fighter $target, iterable $damageModifiers): void;
+
+    public function addDamageModifier(DamageModifier $damageModifier): void;
 }

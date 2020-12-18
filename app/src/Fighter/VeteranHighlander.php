@@ -8,17 +8,26 @@ use Tournament\Damage;
 
 class VeteranHighlander extends Highlander
 {
-    public function isBerserk(): bool
+    public function takeDamage(Damage $damage): void
+    {
+        parent::takeDamage($damage);
+        if ($this->isBerserk() && !$this->hasBerserkDamageModifier()) {
+            $this->damageModifiers[] = new BerserkDamageModifier();
+        }
+    }
+
+    protected function isBerserk(): bool
     {
         return $this->hitPoints() < $this->initialHitPoints() * 0.3;
     }
 
-    protected function calculateDamage(): Damage
+    protected function hasBerserkDamageModifier(): bool
     {
-        $damage = parent::calculateDamage();
-        if ($this->isBerserk()) {
-            $damage = $damage->mul(2);
+        foreach ($this->damageModifiers as $damageModifier) {
+            if ($damageModifier instanceof BerserkDamageModifier) {
+                return true;
+            }
         }
-        return $damage;
+        return false;
     }
 }

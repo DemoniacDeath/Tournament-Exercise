@@ -6,14 +6,14 @@ namespace Tournament\Fighter;
 
 use Tournament\Equipment\Equipment;
 use Tournament\Equipment\Weapon\AbstractWeapon;
-use Tournament\Equipment\Weapon\Poisoned;
+use Tournament\Equipment\Weapon\PoisonDamageModifier;
 
 class ViciousSwordsman extends Swordsman
 {
     public function equip(Equipment $equipment): self
     {
         if ($equipment instanceof AbstractWeapon) {
-            $equipment = new Poisoned($equipment);
+            $equipment->addDamageModifier(new PoisonDamageModifier());
         }
         parent::equip($equipment);
         return $this;

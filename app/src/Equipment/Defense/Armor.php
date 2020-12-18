@@ -12,10 +12,13 @@ class Armor extends Defence
 {
     public function __construct()
     {
-        parent::__construct(new ArrayCollection([
-            new ClosureDamageModifier(fn(Damage $damage) => $damage->sub(1)),
-        ]), new ArrayCollection([
-            new ClosureDamageModifier(fn(Damage $damage) => $damage->sub(3)),
-        ]));
+        parent::__construct(
+            new ArrayCollection([
+                new ClosureDamageModifier(fn(Damage $damage) => $damage->sub(1)),
+            ]),
+            new ArrayCollection([
+                new ClosureDamageModifier(fn(Damage $damage) => $damage->sub(3)),
+            ])
+        );
     }
 }

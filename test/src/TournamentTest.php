@@ -6,8 +6,8 @@ use Tournament\Equipment\Defense\Armor;
 use Tournament\Equipment\Defense\Buckler;
 use Tournament\Equipment\Weapon\Axe;
 use Tournament\Fighter\Highlander;
-use Tournament\Fighter\Strategy\DamageTaking\VeteranDamageTakingStrategy;
-use Tournament\Fighter\Strategy\Equipment\ViciousEquipmentStrategy;
+use Tournament\Fighter\Strategy\DamageTaking\Veteran;
+use Tournament\Fighter\Strategy\Equipment\Vicious;
 use Tournament\Fighter\Swordsman;
 use Tournament\Fighter\VeteranHighlander;
 use Tournament\Fighter\Viking;
@@ -75,12 +75,12 @@ class TournamentTest extends \PHPUnit_Framework_TestCase
     public function testViciousSwordsmanVsVeteranHighlander(): void
     {
         $swordsman = (new Swordsman())
-            ->strategy(new ViciousEquipmentStrategy())
+            ->strategy(new Vicious())
             ->equip(new Axe())
             ->equip(new Buckler())
             ->equip(new Armor());
 
-        $highlander = (new Highlander())->strategy(new VeteranDamageTakingStrategy());
+        $highlander = (new Highlander())->strategy(new Veteran());
 
         $swordsman->engage($highlander);
 

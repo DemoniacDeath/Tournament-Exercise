@@ -10,7 +10,7 @@ use Tournament\DamageModifier;
 use Tournament\DamageType;
 use Tournament\Fighter\Fighter;
 
-class GreatSword extends AbstractWeapon
+class GreatSword extends Weapon
 {
     private int $attackCounter = 0;
 

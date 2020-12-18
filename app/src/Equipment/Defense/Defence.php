@@ -5,6 +5,7 @@ namespace Tournament\Equipment\Defense;
 
 
 use Doctrine\Common\Collections\Collection;
+use Tournament\Damage;
 use Tournament\DamageModifier;
 use Tournament\DamageModifier\CollectionDamageModifier;
 use Tournament\Equipment\Equipment;
@@ -25,19 +26,18 @@ abstract class Defence implements Equipment
         $this->receivedDamageModifiers = $receivedDamageModifiers;
     }
 
-    /**
-     * @return DamageModifier
-     */
     public function getOwnDamageModifier(): DamageModifier
     {
         return new CollectionDamageModifier($this->ownDamageModifiers);
     }
 
-    /**
-     * @return DamageModifier
-     */
     public function getReceivedDamageModifier(): DamageModifier
     {
         return new CollectionDamageModifier($this->receivedDamageModifiers);
+    }
+
+    public function modifyReceivedDamage(Damage $damage): Damage
+    {
+        return $this->getReceivedDamageModifier()->modifyDamage($damage);
     }
 }

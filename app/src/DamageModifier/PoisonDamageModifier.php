@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tournament\Equipment\Weapon;
+namespace Tournament\DamageModifier;
 
 
 use Tournament\Damage;

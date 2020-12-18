@@ -7,7 +7,7 @@ namespace Tournament\Equipment\Weapon;
 use Tournament\Damage;
 use Tournament\DamageType;
 
-class Axe extends AbstractWeapon
+class Axe extends Weapon
 {
     public function getDamage(): Damage
     {

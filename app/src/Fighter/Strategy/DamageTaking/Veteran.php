@@ -5,9 +5,10 @@ namespace Tournament\Fighter\Strategy\DamageTaking;
 
 
 use Tournament\Damage;
+use Tournament\DamageModifier\BerserkDamageModifier;
 use Tournament\Fighter\Fighter;
 
-class VeteranDamageTakingStrategy implements DamageTakingStrategy
+class Veteran implements DamageTakingStrategy
 {
     private bool $alreadyBerserk = false;
 

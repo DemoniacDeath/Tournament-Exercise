@@ -12,7 +12,7 @@ use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Equipment;
 use Tournament\Equipment\Weapon\Weapon;
 use Tournament\Fighter\Strategy\DamageTaking\DamageTakingStrategy;
-use Tournament\Fighter\Strategy\Equipment\EquipmentStrategy;
+use Tournament\Fighter\Strategy\Equipment\WeaponStrategy;
 
 abstract class Fighter
 {
@@ -26,7 +26,7 @@ abstract class Fighter
      * @var Collection|DamageModifier[]
      */
     protected Collection $damageModifiers;
-    protected ?EquipmentStrategy $equipmentStrategy = null;
+    protected ?WeaponStrategy $weaponStrategy = null;
     protected ?DamageTakingStrategy $damageTakingStrategy = null;
 
     /**
@@ -61,15 +61,12 @@ abstract class Fighter
     public function equip(Equipment $equipment): self
     {
         if ($equipment instanceof Weapon) {
-            if ($this->equipmentStrategy !== null) {
-                $equipment = $this->equipmentStrategy->equippingWeapon($equipment);
+            if ($this->weaponStrategy !== null) {
+                $equipment = $this->weaponStrategy->equippingWeapon($equipment);
             }
             $this->weapon = $equipment;
         }
         if ($equipment instanceof Defence) {
-            if ($this->equipmentStrategy !== null) {
-                $equipment = $this->equipmentStrategy->equippingDefence($equipment);
-            }
             $this->defences[] = $equipment;
         }
         return $this;
@@ -77,8 +74,9 @@ abstract class Fighter
 
     public function strategy(Strategy $strategy): Fighter
     {
-        if ($strategy instanceof EquipmentStrategy) {
-            $this->equipmentStrategy = $strategy;
+        if ($strategy instanceof WeaponStrategy) {
+            $this->weaponStrategy = $strategy;
+            $this->weapon = $this->weaponStrategy->equippingWeapon($this->weapon);
         }
         if ($strategy instanceof DamageTakingStrategy) {
             $this->damageTakingStrategy = $strategy;
@@ -88,11 +86,9 @@ abstract class Fighter
 
     public function takeDamage(Damage $damage): void
     {
-        $damage = array_reduce(
-            $this->defences->map(fn(Defence $defence) => $defence->getReceivedDamageModifier())->toArray(),
-            fn(Damage $damage, DamageModifier $damageModifier) => $damageModifier->modifyDamage($damage),
-            $damage
-        );
+        foreach ($this->defences as $defence) {
+            $damage = $defence->modifyReceivedDamage($damage);
+        }
         $this->hitPoints -= $damage->getAmount();
         if ($this->hitPoints < 0) {
             $this->hitPoints = 0;

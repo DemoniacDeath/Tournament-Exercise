@@ -26,10 +26,9 @@ class CollectionDamageModifier implements DamageModifier
 
     public function modifyDamage(Damage $damage): Damage
     {
-        return array_reduce(
-            $this->collection->toArray(),
-            fn(Damage $damage, DamageModifier $damageModifier) => $damageModifier->modifyDamage($damage),
-            $damage
-        );
+        foreach ($this->collection as $damageModifier) {
+            $damage = $damageModifier->modifyDamage($damage);
+        }
+        return $damage;
     }
 }

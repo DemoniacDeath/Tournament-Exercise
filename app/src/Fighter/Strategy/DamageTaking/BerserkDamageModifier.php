@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tournament\Fighter;
+namespace Tournament\Fighter\Strategy\DamageTaking;
 
 
 use Tournament\Damage;

@@ -10,7 +10,7 @@ use Tournament\Fighter\Strategy;
 
 interface EquipmentStrategy extends Strategy
 {
-    public function equippingWeapon(Weapon $weapon);
+    public function equippingWeapon(Weapon $weapon): Weapon;
 
-    public function equippingDefence(Defence $defence);
+    public function equippingDefence(Defence $defence): Defence;
 }

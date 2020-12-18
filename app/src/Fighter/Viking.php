@@ -5,17 +5,17 @@ namespace Tournament\Fighter;
 
 
 use Tournament\Equipment\Weapon\Axe;
+use Tournament\Equipment\Weapon\Weapon;
 
-class Viking extends AbstractFighter
+class Viking extends Fighter
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->equip(new Axe());
-    }
-
     public function initialHitPoints(): int
     {
         return 120;
+    }
+
+    public function initialWeapon(): Weapon
+    {
+        return new Axe();
     }
 }

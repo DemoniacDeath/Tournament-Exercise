@@ -10,13 +10,13 @@ use Tournament\Equipment\Weapon\Weapon;
 
 class ViciousEquipmentStrategy implements EquipmentStrategy
 {
-    public function equippingWeapon(Weapon $weapon)
+    public function equippingWeapon(Weapon $weapon): Weapon
     {
         $weapon->addDamageModifier(new PoisonDamageModifier());
         return $weapon;
     }
 
-    public function equippingDefence(Defence $defence)
+    public function equippingDefence(Defence $defence): Defence
     {
         return $defence;
     }

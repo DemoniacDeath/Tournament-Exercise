@@ -36,9 +36,9 @@ abstract class AbstractWeapon implements Weapon
 
     /**
      * @param Fighter $target
-     * @param iterable|DamageModifier[] $wielderDamageModifiers
+     * @param Collection|DamageModifier[] $wielderDamageModifiers
      */
-    public function attack(Fighter $target, iterable $wielderDamageModifiers): void
+    public function attack(Fighter $target, Collection $wielderDamageModifiers): void
     {
         if (!$this->canAttack()) {
             return;

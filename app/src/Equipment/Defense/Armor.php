@@ -5,16 +5,17 @@ namespace Tournament\Equipment\Defense;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Tournament\DamageModifier\SubstractingDamageModifier;
+use Tournament\Damage;
+use Tournament\DamageModifier\ClosureDamageModifier;
 
 class Armor extends Defence
 {
     public function __construct()
     {
         parent::__construct(new ArrayCollection([
-            new SubstractingDamageModifier(1),
+            new ClosureDamageModifier(fn(Damage $damage) => $damage->sub(1)),
         ]), new ArrayCollection([
-            new SubstractingDamageModifier(3),
+            new ClosureDamageModifier(fn(Damage $damage) => $damage->sub(3)),
         ]));
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tournament\Equipment\Weapon;
 
 
+use Doctrine\Common\Collections\Collection;
 use Tournament\Damage;
 use Tournament\DamageModifier;
 use Tournament\DamageType;
@@ -28,9 +29,9 @@ class GreatSword extends AbstractWeapon
 
     /**
      * @param Fighter $target
-     * @param iterable|DamageModifier[] $wielderDamageModifiers
+     * @param Collection |DamageModifier[] $wielderDamageModifiers
      */
-    public function attack(Fighter $target, iterable $wielderDamageModifiers): void
+    public function attack(Fighter $target, Collection $wielderDamageModifiers): void
     {
         $this->attackCounter++;
         parent::attack($target, $wielderDamageModifiers);

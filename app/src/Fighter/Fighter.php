@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Tournament\Damage;
 use Tournament\DamageModifier;
 use Tournament\DamageModifier\CollectionDamageModifier;
+use Tournament\DamageModifier\DummyDamageModifier;
 use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Equipment;
 use Tournament\Equipment\Weapon\Weapon;
@@ -33,7 +34,7 @@ abstract class Fighter
     public function __construct()
     {
         $this->defences = new ArrayCollection();
-        $this->damageModifier = new CollectionDamageModifier(new ArrayCollection());
+        $this->damageModifier = new DummyDamageModifier();
         $this->hitPoints = $this->initialHitPoints();
         $this->equip($this->initialWeapon());
     }

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Tournament\Damage;
 use Tournament\DamageModifier;
 use Tournament\DamageModifier\CollectionDamageModifier;
+use Tournament\DamageModifier\DummyDamageModifier;
 use Tournament\Equipment\Equipment;
 use Tournament\Fighter\Fighter;
 
@@ -23,7 +24,7 @@ abstract class Weapon implements Equipment
      */
     public function __construct()
     {
-        $this->damageModifier = new CollectionDamageModifier(new ArrayCollection());
+        $this->damageModifier = new DummyDamageModifier();
     }
 
     public function canAttack(): bool

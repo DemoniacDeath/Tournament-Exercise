@@ -6,9 +6,8 @@ namespace Tournament\Fighter\Strategy\DamageTaking;
 
 use Tournament\Damage;
 use Tournament\Fighter\Fighter;
-use Tournament\Fighter\Strategy;
 
-interface DamageTakingStrategy extends Strategy
+interface DamageTakingStrategy
 {
     public function damageTaken(Damage $damage, Fighter $fighter): void;
 }

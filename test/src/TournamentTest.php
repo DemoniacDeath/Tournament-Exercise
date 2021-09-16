@@ -75,12 +75,12 @@ class TournamentTest extends TestCase
     public function testViciousSwordsmanVsVeteranHighlander(): void
     {
         $swordsman = (new Swordsman())
-            ->strategy(new Vicious())
+            ->weaponQuippingStrategy(new Vicious())
             ->equip(new Axe())
             ->equip(new Buckler())
             ->equip(new Armor());
 
-        $highlander = (new Highlander())->strategy(new Veteran());
+        $highlander = (new Highlander())->damageTakingStrategy(new Veteran());
 
         $swordsman->engage($highlander);
 

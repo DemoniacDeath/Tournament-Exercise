@@ -19,9 +19,6 @@ abstract class Weapon implements Equipment
      */
     private $damageModifier;
 
-    /**
-     * AbstractWeapon constructor.
-     */
     public function __construct()
     {
         $this->damageModifier = new DummyDamageModifier();

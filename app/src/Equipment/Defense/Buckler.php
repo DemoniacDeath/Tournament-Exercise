@@ -38,7 +38,7 @@ class Buckler extends Defence
 
                 private function blocked(DamageType $damageType): void
                 {
-                    if ($damageType->equals(DamageType::AXE())) {
+                    if ($damageType->isAxeDamage()) {
                         $this->hitsBlockedByAxe++;
                         if ($this->hitsBlockedByAxe >= 3) {
                             $this->isDestroyed = true;

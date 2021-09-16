@@ -7,7 +7,7 @@ namespace Tournament\Fighter\Strategy\Equipment;
 use Tournament\DamageModifier\PoisonDamageModifier;
 use Tournament\Equipment\Weapon\Weapon;
 
-class Vicious implements WeaponStrategy
+class Vicious implements WeaponEquippingStrategy
 {
     public function equippingWeapon(Weapon $weapon): Weapon
     {

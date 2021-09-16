@@ -15,7 +15,6 @@ abstract class Defence implements Equipment
     private ?DamageModifier $receivedDamageModifier;
 
     /**
-     * Defence constructor.
      * @param DamageModifier|null $ownDamageModifier
      * @param DamageModifier|null $receivedDamageModifier
      */

@@ -5,9 +5,8 @@ namespace Tournament\Fighter\Strategy\Equipment;
 
 
 use Tournament\Equipment\Weapon\Weapon;
-use Tournament\Fighter\Strategy;
 
-interface WeaponStrategy extends Strategy
+interface WeaponEquippingStrategy
 {
     public function equippingWeapon(Weapon $weapon): Weapon;
 }

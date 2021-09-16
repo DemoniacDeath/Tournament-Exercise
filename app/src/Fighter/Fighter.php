@@ -14,7 +14,7 @@ use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Equipment;
 use Tournament\Equipment\Weapon\Weapon;
 use Tournament\Fighter\Strategy\DamageTaking\DamageTakingStrategy;
-use Tournament\Fighter\Strategy\Equipment\WeaponStrategy;
+use Tournament\Fighter\Strategy\Equipment\WeaponEquippingStrategy;
 
 abstract class Fighter
 {
@@ -25,12 +25,9 @@ abstract class Fighter
      */
     private Collection $defences;
     private DamageModifier $damageModifier;
-    private ?WeaponStrategy $weaponStrategy = null;
+    private ?WeaponEquippingStrategy $weaponStrategy = null;
     private ?DamageTakingStrategy $damageTakingStrategy = null;
 
-    /**
-     * AbstractFighter constructor.
-     */
     public function __construct()
     {
         $this->defences = new ArrayCollection();
@@ -71,15 +68,16 @@ abstract class Fighter
         return $this;
     }
 
-    public function strategy(Strategy $strategy): Fighter
+    public function weaponQuippingStrategy(WeaponEquippingStrategy $weaponEquippingStrategy): Fighter
     {
-        if ($strategy instanceof WeaponStrategy) {
-            $this->weaponStrategy = $strategy;
-            $this->weapon = $this->weaponStrategy->equippingWeapon($this->weapon);
-        }
-        if ($strategy instanceof DamageTakingStrategy) {
-            $this->damageTakingStrategy = $strategy;
-        }
+        $this->weaponStrategy = $weaponEquippingStrategy;
+        $this->weapon = $this->weaponStrategy->equippingWeapon($this->weapon);
+        return $this;
+    }
+
+    public function damageTakingStrategy(DamageTakingStrategy $damageTakingStrategy): Fighter
+    {
+        $this->damageTakingStrategy = $damageTakingStrategy;
         return $this;
     }
 

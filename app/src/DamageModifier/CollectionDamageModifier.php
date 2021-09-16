@@ -17,7 +17,6 @@ class CollectionDamageModifier extends AbstractDamageModifier
     private Collection $collection;
 
     /**
-     * CollectionDamageModifier constructor.
      * @param Collection|DamageModifier[] $collection
      */
     public function __construct(Collection $collection)

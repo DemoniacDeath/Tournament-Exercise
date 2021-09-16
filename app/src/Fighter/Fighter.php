@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Tournament\Damage;
 use Tournament\DamageModifier;
+use Tournament\DamageModifier\CollectionDamageModifier;
 use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Equipment;
 use Tournament\Equipment\Weapon\Weapon;
@@ -22,10 +23,7 @@ abstract class Fighter
      * @var Collection|Defence[]
      */
     private Collection $defences;
-    /**
-     * @var Collection|DamageModifier[]
-     */
-    private Collection $damageModifiers;
+    private DamageModifier $damageModifier;
     private ?WeaponStrategy $weaponStrategy = null;
     private ?DamageTakingStrategy $damageTakingStrategy = null;
 
@@ -35,7 +33,7 @@ abstract class Fighter
     public function __construct()
     {
         $this->defences = new ArrayCollection();
-        $this->damageModifiers = new ArrayCollection();
+        $this->damageModifier = new CollectionDamageModifier(new ArrayCollection());
         $this->hitPoints = $this->initialHitPoints();
         $this->equip($this->initialWeapon());
     }
@@ -100,18 +98,16 @@ abstract class Fighter
 
     public function addDamageModifier(DamageModifier $damageModifier): void
     {
-        $this->damageModifiers->add($damageModifier);
+        $this->damageModifier = $this->damageModifier->combineWith($damageModifier);
     }
 
     /**
-     * @return Collection|DamageModifier[]
+     * @return DamageModifier
      */
-    private function collectDamageModifiers(): Collection
+    private function collectDamageModifiers(): DamageModifier
     {
-        $damageModifiers = $this->defences->map(fn(Defence $defence) => $defence->getOwnDamageModifier());
-        foreach ($this->damageModifiers as $damageModifier) {
-            $damageModifiers->add($damageModifier);
-        }
-        return $damageModifiers;
+        return (new CollectionDamageModifier(
+            $this->defences->map(fn(Defence $defence) => $defence->getOwnDamageModifier())
+        ))->combineWith($this->damageModifier);
     }
 }

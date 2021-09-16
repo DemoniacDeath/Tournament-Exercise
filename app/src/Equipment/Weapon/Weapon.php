@@ -5,24 +5,25 @@ namespace Tournament\Equipment\Weapon;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Tournament\Damage;
 use Tournament\DamageModifier;
+use Tournament\DamageModifier\CollectionDamageModifier;
 use Tournament\Equipment\Equipment;
 use Tournament\Fighter\Fighter;
 
 abstract class Weapon implements Equipment
 {
     /**
-     * @var Collection|DamageModifier[]
+     * @var CollectionDamageModifier
      */
-    private Collection $damageModifiers;
+    private $damageModifier;
 
     /**
      * AbstractWeapon constructor.
      */
     public function __construct()
     {
-        $this->damageModifiers = new ArrayCollection();
+        $this->damageModifier = new CollectionDamageModifier(new ArrayCollection());
     }
 
     public function canAttack(): bool
@@ -32,27 +33,30 @@ abstract class Weapon implements Equipment
 
     public function addDamageModifier(DamageModifier $damageModifier): self
     {
-        $this->damageModifiers[] = $damageModifier;
+        $this->damageModifier = $this->damageModifier->combineWith($damageModifier);
         return $this;
     }
 
     /**
      * @param Fighter $target
-     * @param Collection|DamageModifier[] $wielderDamageModifiers
+     * @param DamageModifier $wielderDamageModifier
      */
-    public function attack(Fighter $target, Collection $wielderDamageModifiers): void
+    public function attack(Fighter $target, DamageModifier $wielderDamageModifier): void
     {
         if (!$this->canAttack()) {
             return;
         }
-        $damage = $this->getDamage();
-        foreach ($this->damageModifiers as $damageModifier) {
-            $damage = $damageModifier->modifyDamage($damage);
-        }
-        foreach ($wielderDamageModifiers as $damageModifier) {
-            $damage = $damageModifier->modifyDamage($damage);
-        }
-
-        $target->takeDamage($damage);
+        $target->takeDamage(
+            $wielderDamageModifier
+                ->combineWith($this->getOwnDamageModifier())
+                ->modifyDamage($this->getDamage())
+        );
     }
+
+    public function getOwnDamageModifier(): DamageModifier
+    {
+        return $this->damageModifier;
+    }
+
+    abstract public function getDamage(): Damage;
 }

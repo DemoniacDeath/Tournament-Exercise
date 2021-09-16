@@ -5,10 +5,10 @@ namespace Tournament\DamageModifier;
 
 
 use Closure;
+use Tournament\AbstractDamageModifier;
 use Tournament\Damage;
-use Tournament\DamageModifier;
 
-class ClosureDamageModifier implements DamageModifier
+class ClosureDamageModifier extends AbstractDamageModifier
 {
     private Closure $closure;
 

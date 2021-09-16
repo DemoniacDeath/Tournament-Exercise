@@ -5,8 +5,8 @@ namespace Tournament\Equipment\Defense;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Tournament\AbstractDamageModifier;
 use Tournament\Damage;
-use Tournament\DamageModifier;
 use Tournament\DamageType;
 
 class Buckler extends Defence
@@ -15,7 +15,7 @@ class Buckler extends Defence
     {
         parent::__construct(
             new ArrayCollection([
-                new class implements DamageModifier {
+                new class extends AbstractDamageModifier {
                     private bool $isDestroyed = false;
                     private int $hitsReceived = 0;
                     private int $hitsBlockedByAxe = 0;

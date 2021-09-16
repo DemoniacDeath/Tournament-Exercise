@@ -7,4 +7,6 @@ namespace Tournament;
 interface DamageModifier
 {
     public function modifyDamage(Damage $damage): Damage;
+
+    public function combineWith(DamageModifier $otherDamageModifier): DamageModifier;
 }

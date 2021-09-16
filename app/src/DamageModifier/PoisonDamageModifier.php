@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Tournament\DamageModifier;
 
 
+use Tournament\AbstractDamageModifier;
 use Tournament\Damage;
-use Tournament\DamageModifier;
 
-class PoisonDamageModifier implements DamageModifier
+class PoisonDamageModifier extends AbstractDamageModifier
 {
     private int $attackCounter = 0;
 

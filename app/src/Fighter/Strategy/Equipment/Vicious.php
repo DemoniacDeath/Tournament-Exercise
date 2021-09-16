@@ -5,7 +5,6 @@ namespace Tournament\Fighter\Strategy\Equipment;
 
 
 use Tournament\DamageModifier\PoisonDamageModifier;
-use Tournament\Equipment\Defense\Defence;
 use Tournament\Equipment\Weapon\Weapon;
 
 class Vicious implements WeaponStrategy

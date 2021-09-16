@@ -5,7 +5,6 @@ namespace Tournament\DamageModifier;
 
 
 use Closure;
-use Tournament\AbstractDamageModifier;
 use Tournament\Damage;
 
 class ClosureDamageModifier extends AbstractDamageModifier

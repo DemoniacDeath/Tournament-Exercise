@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Tournament\DamageModifier;
 
 
-use Tournament\AbstractDamageModifier;
 use Tournament\Damage;
 
 class PoisonDamageModifier extends AbstractDamageModifier

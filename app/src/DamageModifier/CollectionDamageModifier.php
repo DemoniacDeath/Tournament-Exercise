@@ -6,7 +6,6 @@ namespace Tournament\DamageModifier;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Tournament\AbstractDamageModifier;
 use Tournament\Damage;
 use Tournament\DamageModifier;
 

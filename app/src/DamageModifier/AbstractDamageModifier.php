@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Tournament;
+namespace Tournament\DamageModifier;
 
-use Tournament\DamageModifier\CollectionDamageModifier;
+use Tournament\DamageModifier;
 
 abstract class AbstractDamageModifier implements DamageModifier
 {

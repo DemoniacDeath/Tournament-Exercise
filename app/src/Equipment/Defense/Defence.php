@@ -4,36 +4,35 @@ declare(strict_types=1);
 namespace Tournament\Equipment\Defense;
 
 
-use Doctrine\Common\Collections\Collection;
 use Tournament\Damage;
 use Tournament\DamageModifier;
-use Tournament\DamageModifier\CollectionDamageModifier;
+use Tournament\DamageModifier\DummyDamageModifier;
 use Tournament\Equipment\Equipment;
 
 abstract class Defence implements Equipment
 {
-    private Collection $ownDamageModifiers;
-    private Collection $receivedDamageModifiers;
+    private ?DamageModifier $ownDamageModifier;
+    private ?DamageModifier $receivedDamageModifier;
 
     /**
      * Defence constructor.
-     * @param Collection|DamageModifier[] $ownDamageModifiers
-     * @param Collection|DamageModifier[] $receivedDamageModifiers
+     * @param DamageModifier|null $ownDamageModifier
+     * @param DamageModifier|null $receivedDamageModifier
      */
-    public function __construct(Collection $receivedDamageModifiers, Collection $ownDamageModifiers)
+    public function __construct(DamageModifier $receivedDamageModifier = null, DamageModifier $ownDamageModifier = null)
     {
-        $this->receivedDamageModifiers = $receivedDamageModifiers;
-        $this->ownDamageModifiers = $ownDamageModifiers;
+        $this->receivedDamageModifier = $receivedDamageModifier;
+        $this->ownDamageModifier = $ownDamageModifier;
     }
 
     public function getOwnDamageModifier(): DamageModifier
     {
-        return new CollectionDamageModifier($this->ownDamageModifiers);
+        return $this->ownDamageModifier ?? new DummyDamageModifier();
     }
 
     public function getReceivedDamageModifier(): DamageModifier
     {
-        return new CollectionDamageModifier($this->receivedDamageModifiers);
+        return $this->receivedDamageModifier ?? new DummyDamageModifier();
     }
 
     public function modifyReceivedDamage(Damage $damage): Damage
